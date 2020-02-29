@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class LogAop {
 	
-	@Around("withinbit.com.theaters.controller.*) or within(bit.com.theaters.dao.impl.*)")
+	@Around("within(bit.com.theaters.controller.*) or within(bit.com.theaters.dao.impl.*)")
 	public Object loggerAop(ProceedingJoinPoint joinpoint) throws Throwable {
 		String signatureStr = joinpoint.getSignature().toShortString();
 		try {
