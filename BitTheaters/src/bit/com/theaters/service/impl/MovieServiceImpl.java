@@ -19,5 +19,10 @@ public class MovieServiceImpl implements MovieService {
 	public List<MovieDto> getMovieList() {
 		return movieDao.getMovieList();
 	}
+
+	@Override
+	public MovieDto getMovie(int movieNum) {
+		return movieDao.getMovie(movieNum);
+	}
 	
 }

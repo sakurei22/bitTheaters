@@ -34,9 +34,9 @@
 					<div class="card mb-3">
 						<h3 class="card-header">
 							No<%=i + 1%></h3>
-						<img style="width: 100%; display: block;"
+						<a href="#" onclick ="selectMovie(<%=movie.getMovie_num()%>)"><img style="width: 100%; display: block;"
 							src="<%=movie.getMovie_poster()%>"
-							alt="<%=movie.getMovie_title()%>">
+							alt="<%=movie.getMovie_title()%>"></a>
 						<div class="card-body">
 							<h5 class="card-title" style ="color:#ba0000;"><%=movie.getMovie_title()%></h5>
 						</div>
@@ -45,34 +45,31 @@
 							<li class="list-group-item"><strong>like</strong> : <%=toNumFormat(movie.getMovie_like()) %></li>
 						</ul>
 						<div class="card-footer text-muted" align = "right">
-							<button type="button" class="btn btn-primary btn-sm">예매하기</button>
+							<button type="button" id ="ticketingBtn" class="btn btn-primary btn-sm" movienum ="<%=movie.getMovie_num()%>">예매하기</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
-
 			<%
 				}
 			%>
 		</div>
-
-		<!-- Pagination
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
-					class="sr-only">Previous</span>
-			</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item"><a class="page-link" href="#"
-				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
-					class="sr-only">Next</span>
-			</a></li>
-		</ul>
--->
 	</div>
 	<!-- /.container -->
+	
+<script type="text/javascript">
+
+function selectMovie(movie_num){
+	location.href="selectMovie.do?movieNum="+movie_num;
+}
+
+$(document).ready(function () {
+	$("ticketingBtn").click(function(){
+		});
+	
+});
+
+</script>
 
 <%@ include file="./../../include/footer.jsp"%>

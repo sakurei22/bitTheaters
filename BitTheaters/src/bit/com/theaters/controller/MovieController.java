@@ -26,4 +26,12 @@ public class MovieController {
 		return "theatersList";
 	}
 	
+	@RequestMapping(value = "selectMovie.do", method= RequestMethod.GET)
+	public String selectMovie(Model model, int movieNum) {
+		MovieDto movie = movieService.getMovie(movieNum);
+		model.addAttribute("selectMovie", movie);
+		
+		return "movieDetail";
+	}
+	
 }
