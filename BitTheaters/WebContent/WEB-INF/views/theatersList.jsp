@@ -14,23 +14,14 @@
 	return df.format(num);
 }
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Bit Theaters : 비트 영화관</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.css" media="screen">
-</head>
-<body>
-
+<%@ include file="./../../include/header.jsp"%>
 
 	<!-- Page Content -->
 	<div class="container">
 
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
-			: 비트 영화관 : <small style = "color :#ba0000;">인기 상영작 순</small>
+			: 비트 영화관 무비 차트 : <small style = "color :#ba0000;">인기 상영작 순</small>
 		</h1>
 
 		<div class="row">
@@ -84,6 +75,4 @@
 	</div>
 	<!-- /.container -->
 
-
-</body>
-</html>
+<%@ include file="./../../include/footer.jsp"%>

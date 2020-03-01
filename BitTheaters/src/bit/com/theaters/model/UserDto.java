@@ -14,6 +14,7 @@ CREATE TABLE THEATERS_USERS(
     USER_EMAIL VARCHAR2(100) NOT NULL,
     USER_BIRTH VARCHAR2(10) NOT NULL,
     USER_NAME VARCHAR2(15) NOT NULL,
+    USER_NICKNAME VARCHAR2(15) NULL,
     USER_JOIN_DAY DATE NOT NULL,
     USER_AUTH NUMBER(1) NOT NULL
 );
@@ -29,6 +30,7 @@ public class UserDto implements Serializable {
 	private String user_email;
 	private String user_birth;
 	private String user_name;
+	private String user_nickname;
 	private String user_join_day;
 	private int user_auth;
 	
@@ -36,7 +38,7 @@ public class UserDto implements Serializable {
 	}
 	
 	public UserDto(String user_id, String user_pwd, String user_phone, String user_email, String user_birth,
-			String user_name) {
+			String user_name, String user_nickname) {
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -44,10 +46,11 @@ public class UserDto implements Serializable {
 		this.user_email = user_email;
 		this.user_birth = user_birth;
 		this.user_name = user_name;
+		this.user_nickname = user_nickname;
 	}
 
 	public UserDto(String user_id, String user_pwd, String user_phone, String user_email, String user_birth,
-			String user_name, String user_join_day, int user_auth) {
+			String user_name, String user_nickname, String user_join_day, int user_auth) {
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -55,8 +58,17 @@ public class UserDto implements Serializable {
 		this.user_email = user_email;
 		this.user_birth = user_birth;
 		this.user_name = user_name;
+		this.user_nickname = user_nickname;
 		this.user_join_day = user_join_day;
 		this.user_auth = user_auth;
+	}
+
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
 
 	public String getUser_id() {

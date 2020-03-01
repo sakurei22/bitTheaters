@@ -1,5 +1,8 @@
 package bit.com.theaters.service;
 
-public interface UserService {
+import bit.com.theaters.model.UserDto;
 
+public interface UserService {
+	public int idCheck(String id);
+	public int addUser(UserDto user);
 }
