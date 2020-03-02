@@ -14,4 +14,9 @@
 		VALUES(#{user_id}, #{user_pwd}, #{user_phone}, #{user_email}, #{user_birth}, #{user_name}, #{user_nickname}, SYSDATE, 3)
 	</insert>
 	
+	<select id ="loginCheck" parameterType="bit.com.theaters.model.UserDto" resultType="bit.com.theaters.model.UserDto">
+		SELECT USER_ID, USER_NICKNAME, USER_AUTH FROM THEATERS_USERS
+		WHERE USER_ID=#{user_id} AND USER_PWD = #{user_pwd} 
+	</select>
+	
 </mapper>

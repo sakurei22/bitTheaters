@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	List<MovieDto> movieList = (List<MovieDto>) request.getAttribute("movieList");
+	List<MovieDto> movieList = (List<MovieDto>) request.getSession().getAttribute("movieList");
 %>
 
 <%!
@@ -45,7 +45,7 @@
 							<li class="list-group-item"><strong>like</strong> : <%=toNumFormat(movie.getMovie_like()) %></li>
 						</ul>
 						<div class="card-footer text-muted" align = "right">
-							<button type="button" id ="ticketingBtn" class="btn btn-primary btn-sm" movienum ="<%=movie.getMovie_num()%>">예매하기</button>
+							<button type="button" class="btn btn-primary btn-sm" onclick = "ticketing(<%=i%>)">예매하기</button>
 						</div>
 					</div>
 				</div>
@@ -65,10 +65,33 @@ function selectMovie(movie_num){
 }
 
 $(document).ready(function () {
-	$("ticketingBtn").click(function(){
+	$("#ticketingBtn").click(function(){
+		if('<%=request.getSession().getAttribute("login")%>' == 'null'){
+			alert("로그인이 필요합니다.");
+			location.href="login.do";
+		} else if('<%=request.getSession().getAttribute("login")%>' != 'null'){
+			alert($("#ticketingBtn").movienum());
+			
+			//location.href="ticket.do";
+		}
+		
+		
 		});
 	
 });
+
+function ticketing(num){
+
+	if('<%=request.getSession().getAttribute("login")%>' == 'null'){
+		alert("로그인이 필요합니다.");
+		location.href="login.do";
+	} else if('<%=request.getSession().getAttribute("login")%>' != 'null'){
+		alert(num);
+		
+		//location.href="ticket.do";
+	}
+	
+}
 
 </script>
 

@@ -29,4 +29,10 @@ public class UserDaoImpl implements UserDao {
 		return status;
 	}
 
+	@Override
+	public UserDto loginCheck(UserDto user) {
+		UserDto dto = sqlSession.selectOne(namespace+"loginCheck", user);
+		return dto;
+	}
+
 }

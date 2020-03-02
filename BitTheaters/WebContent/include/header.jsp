@@ -9,6 +9,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.css" media="screen">
 </head>
+
+
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">BitTheaters</a>
@@ -22,34 +24,65 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link"
 					href="movieList.do">영화목록</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">예매하기</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id = "ticketingBtn">예매하기</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">나의 예매정보</a></li>
 			</ul>
 		</div>
 		<div class="my-2 my-lg-0">
-			<ul class = "navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="#" id = "loginBtn">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" href="#" id = "LogoutBtn">로그아웃</a></li>
-				<li class="nav-item"><a class="nav-link" href="regi.do" id = "regiBtn">회원가입</a></li>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="login.do" id="loginBtn">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" href="regi.do" id="regiBtn">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">로그아웃</a></li>
 			</ul>
 		</div>
 	</nav>
-	
-	
+
 	<script type="text/javascript">
 
 	$(document).ready(function(){
 		if('<%=request.getSession().getAttribute("login")%>' != 'null') {
 			$("#loginBtn").hide();
-			$("#logoutBtn").show();
 			$("#regiBtn").hide();
-			
-		} else if('<%=request.getSession().getAttribute("login") %>' == 'null') {
+			$("#logoutBtn").show();
+		} else if('<%=request.getSession().getAttribute("login")%>' == 'null') {
 			$("#loginBtn").show();
+			$("#regiBtn").show();
 			$("#logoutBtn").hide();
-			$("#regiBtn").show();			
-			
 		}
-		
+
+		//로그아웃 시도시 처리 
+		$(document).on("click", "#logoutBtn", function() {
+
+			if (confirm("정말 로그아웃하시겠습니까?")) {
+				//확인버튼 클릭시 동작
+				$.ajax({
+					url : "logout.do",
+					type : "get",
+					success : function() {
+						//alert("통신성공");
+						alert("로그아웃되셨습니다. 감사합니다.");
+						$("#loginBtn").show();
+						$("#regiBtn").show();
+						$("#logoutBtn").hide();
+						location.href = "movieList.do";
+					},
+					error : function() {
+						alert("통신실패");
+					}
+				});
+			} else {
+				//취소버튼 클릭시 동작 
+			}
+		});
+
+		$("#ticketingBtn").click(function(){
+			if('<%=request.getSession().getAttribute("login")%>' == 'null'){
+				location.href="login.do";
+			} else if('<%=request.getSession().getAttribute("login")%>' != 'null'){
+				location.href="ticket.do";
+			}
+			
+		});
+
 	});
 	</script>

@@ -2,6 +2,8 @@ package bit.com.theaters.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,10 @@ public class MovieController {
 	MovieService movieService;
 
 	@RequestMapping(value = "movieList.do", method= RequestMethod.GET)
-	public String moveList(Model model) {
+	public String moveList(HttpSession session) {
 		
 		List<MovieDto> list = movieService.getMovieList();
-		model.addAttribute("movieList", list);
+		session.setAttribute("movieList", list);
 		
 		return "theatersList";
 	}

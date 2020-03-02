@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.addUser(user);
 	}
 
+	@Override
+	public UserDto loginCheck(UserDto user) {
+		return userDao.loginCheck(user);
+	}
+
 }
