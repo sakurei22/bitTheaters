@@ -1,3 +1,4 @@
+<%@page import="bit.com.theaters.model.UserDto"%>
 <%@page import="bit.com.theaters.model.TheaterDto"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
@@ -9,9 +10,23 @@
 
 <%
 	List<MovieDto> movieList = (List<MovieDto>) request.getSession().getAttribute("movieList");
-
-	Map<String, TheaterDto> movieOne = new HashMap<String, TheaterDto>();
+	UserDto user = (UserDto)request.getSession().getAttribute("login");
 %>
+
+<style>
+
+.bg { background-color: #D9230F;
+ color : white;
+ font-weight: 400;
+ }
+ .bg:hover {
+ background-color: #D9230F;
+ color : white;
+ font-weight: 400;
+ text-decoration: none;
+ cursor: text;
+ }
+</style>
 <!-- Page Content -->
 <div class="container" style="height: 650px;">
 
@@ -20,37 +35,154 @@
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="bs-component">
-				<div class="list-group">
-					<span class="list-group-item"><strong>영화 제목</strong></span>
+				
+				<ul class="list-group">
 					<%
 						for (int i = 0; i < movieList.size(); i++) {
 							MovieDto movie = movieList.get(i);
 					%>
-					<a href="#" id="movie<%=i%>" 
-						class="list-group-item list-group-item-action"><%=movie.getMovie_title()%></a>
-
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<a href="#" value = "<%=i+1%>" title="<%=movie.getMovie_title()%>" class = "movielist"><%=movie.getMovie_title()%></a>
+					</li>
+					
 					<%
 						}
 					%>
-				</div>
+				</ul>
 
 			</div>
 		</div>
 		<div class="col-lg-4" id="theater"></div>
+		<div class="col-lg-4" id="times"></div>
 	</div>
 </div>
-
+<div class="modal" id="popup">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%=user.getUser_nickname() %>님이 선택하신 영화 내역입니다.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="declose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul id="movie_ticket_final">
+		</ul>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
-	$("a").click(function(){
+	var movieChoiceNum; 
+	var movieTitle;
+	var theater;
+	var time;
+	$(".movielist").click(function() {
 		$("#theater").empty();
-		$("a").removeClass("active");
-		$(this).toggleClass("active");
-		
-		$("#theater").append("<div class='bs-component'><div class='list-group'><span class='list-group-item'><strong>극장</strong></span><a href='#' id='th1' class='list-group-item list-group-item-action'>상봉</a><a href='#' id='th2' class='list-group-item list-group-item-action'>강남</a><a href='#' id='th3' class='list-group-item list-group-item-action'>건대</a></div></div>");
-		
-	});
+		$("#times").empty();
+		movieChoiceNum = $(this).attr("value");
+		movieTitle = $(this).attr("title");
+		$(".movielist").removeClass("bg");
+		$(this).addClass("bg");
+		$.ajax({
+			type : "post",
+			url : "./theaterlist.do",
+			data : {
+				"movieNum" : movieChoiceNum
+			},
+			success : function(data) {
+				
+				$("#theater").append(
+						"<div class='bs-component'>"
+						+ "<ul class='list-group'>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.one+"' class='theaterlist'>"+data.one
+						+"</a></li>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.two+"' class='theaterlist'>"+data.two+"</a></li>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.three+"' class='theaterlist'>"+data.three+"</a></li>"
+						+ "</ul></div>");
+			},
+			error : function( jqXHR, textStatus, errorThrown ) {
 
+				alert( jqXHR.status );
+
+				alert( jqXHR.statusText );
+
+				alert( jqXHR.responseText );
+
+				alert( jqXHR.readyState );
+
+				}
+		});
 		
+
+	});
+	$(document).on("click", ".theaterlist", function(){
+		theater = $(this).attr("value");
+		
+		$("#times").empty();
+		$(".theaterlist").removeClass("bg");
+		$(this).addClass("bg");
+		$.ajax({
+			type : "post",
+			url : "./timelist.do",
+			data : {
+				"movieNum" : movieChoiceNum,
+				"theater" : theater
+			},
+			success : function(data) {
+				
+				$("#times").append(
+						"<div class='bs-component'>"
+						+ "<ul class='list-group'>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.one+"' class='timelist'>"+data.one
+						+"</a></li>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.two+"' class='timelist'>"+data.two+"</a></li>"
+						+"<li class='list-group-item d-flex justify-content-between align-items-center'>"
+						+ "<a href='#' value='"+data.three+"' class='timelist'>"+data.three+"</a></li>"
+						+ "</ul></div>");
+			},
+			error : function( jqXHR, textStatus, errorThrown ) {
+
+				alert( jqXHR.status );
+
+				alert( jqXHR.statusText );
+
+				alert( jqXHR.responseText );
+
+				alert( jqXHR.readyState );
+
+				}
+		});
+		
+		$(document).on("click", ".timelist", function(){
+			time = $(this).attr("value");
+			
+			$(".timelist").removeClass("bg");
+			$(this).addClass("bg");
+			$("#movie_ticket_final").empty(); 
+			var liList = "<li> 영화 제목 : "+movieTitle+"</li>";
+			liList += "<li> 극장 : "+theater+"</li>";
+			liList += "<li> 영화 시간 : "+time+"</li>";
+			liList += "<div align ='center' style = 'margin-top : 25px;'>";
+			liList += "<button type = 'button' id = 'ticketingAfBtn' class='btn btn-primary'>예매하기</button></div>";
+
+			$("#movie_ticket_final").append(liList); 
+			$("#popup").css("display","block");
+
+		});
+
+		$(document).on("click", "#declose", function() {
+			//alert("close 클릭");
+			$("#popup").css("display", "none");
+			$("#movie_ticket_final").empty(); 
+		});
+
+	});
 </script>
 
 <%@ include file="./../../include/footer.jsp"%>
