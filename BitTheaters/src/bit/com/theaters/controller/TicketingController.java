@@ -3,16 +3,37 @@ package bit.com.theaters.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import bit.com.theaters.model.TheaterDto;
+import bit.com.theaters.model.TicketDto;
+import bit.com.theaters.service.TicketingService;
+
 
 @Controller
 public class TicketingController {
+	@Autowired
+	TicketingService ticketService;
+	
+	@ResponseBody
+	@RequestMapping(value = "ticketingAf.do", method = RequestMethod.POST , produces = "application/String; charset=utf-8")
+	public String ticketing(TicketDto ticket) {
+		
+		String str = "";
 
+		int count = ticketService.addTicket(ticket);
+		if (count == 1) {
+			str = "ok";
+		} else {
+			str = "no";
+		}
+
+		return str;
+	}
+	
 	@RequestMapping(value = "ticket.do", method = RequestMethod.GET)
 	public String ticket() {
 		return "ticket";

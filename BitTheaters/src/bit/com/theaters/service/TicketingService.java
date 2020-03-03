@@ -1,5 +1,7 @@
 package bit.com.theaters.service;
 
-public interface TicketingService {
+import bit.com.theaters.model.TicketDto;
 
+public interface TicketingService {
+	public int addTicket(TicketDto ticket);
 }
