@@ -44,9 +44,6 @@
 							<li class="list-group-item"><strong>예매율</strong> : <%=movie.getMovie_ticketing() %></li>
 							<li class="list-group-item"><strong>like</strong> : <%=toNumFormat(movie.getMovie_like()) %></li>
 						</ul>
-						<div class="card-footer text-muted" align = "right">
-							<button type="button" class="btn btn-primary btn-sm" onclick = "ticketing(<%=i%>)">예매하기</button>
-						</div>
 					</div>
 				</div>
 			</div>

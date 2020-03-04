@@ -1,5 +1,11 @@
+<%@page import="bit.com.theaters.model.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%
+	//UserDto user = (UserDto)request.getSession().getAttribute("login");
+	
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +34,7 @@
 				<li class="nav-item active"><a class="nav-link"
 					href="movieList.do">영화목록</a></li>
 				<li class="nav-item"><a class="nav-link" href="#" id = "ticketingBtn">예매하기</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">나의 예매정보</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id = "ticketHistoryBtn">나의 예매정보</a></li>
 			</ul>
 		</div>
 		<div class="my-2 my-lg-0">
@@ -47,10 +53,12 @@
 			$("#loginBtn").hide();
 			$("#regiBtn").hide();
 			$("#logoutBtn").show();
+			$("#ticketHistoryBtn").show();
 		} else if('<%=request.getSession().getAttribute("login")%>' == 'null') {
 			$("#loginBtn").show();
 			$("#regiBtn").show();
 			$("#logoutBtn").hide();
+			$("#ticketHistoryBtn").hide();
 		}
 
 		//로그아웃 시도시 처리 
@@ -87,5 +95,8 @@
 			
 		});
 
+		$("#ticketHistoryBtn").click(function(){
+			location.href="reservHistory.do?user_id=${login.user_id}";
+		});
 	});
 	</script>

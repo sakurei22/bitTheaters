@@ -9,7 +9,8 @@
 
 <%
 	List<MovieDto> movieList = (List<MovieDto>) request.getSession().getAttribute("movieList");
-	UserDto user = (UserDto)request.getSession().getAttribute("login");
+UserDto user = (UserDto)request.getSession().getAttribute("login");
+	
 %>
 
 <style>
@@ -232,9 +233,10 @@
 				url : "./ticketingAf.do",
 				data : ticketdto,
 				success : function(data) {
-					if(data.trim()=="ok"){
+					if(data.status=="ok"){
 						alert("예매에 성공하셨습니다!")
-						location.href="./reservation.do"
+						var ticket_num = data.ticket_num;
+						location.href="./reservation.do?ticket_num="+ticket_num;
 					} else {
 						alert("예메에 실패하셨습니다.");
 					}

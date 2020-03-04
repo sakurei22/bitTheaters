@@ -1,15 +1,20 @@
 package bit.com.theaters.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import bit.com.theaters.model.TicketDto;
+import bit.com.theaters.model.UserDto;
 import bit.com.theaters.service.TicketingService;
 
 
@@ -18,20 +23,42 @@ public class TicketingController {
 	@Autowired
 	TicketingService ticketService;
 	
-	@ResponseBody
-	@RequestMapping(value = "ticketingAf.do", method = RequestMethod.POST , produces = "application/String; charset=utf-8")
-	public String ticketing(TicketDto ticket) {
+	@RequestMapping(value = "reservation.do", method=RequestMethod.GET)
+	public String reservation(Model model, String ticket_num) {
 		
-		String str = "";
+		int ticket_number = Integer.parseInt(ticket_num);
+		TicketDto reservTicket = ticketService.getReservation(ticket_number);
+		
+		model.addAttribute("reservTicket", reservTicket);
+		
+		return "reservation";
+	}
+	
+	@RequestMapping(value = "reservHistory.do", method=RequestMethod.GET)
+	public String reservHistory(Model model, String user_id) {
+		
+		List<TicketDto> list = ticketService.getReservList(user_id);
+		model.addAttribute("reservList", list);
+		return "reservHistory";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "ticketingAf.do", method = RequestMethod.POST)
+	public Map<String, Object> ticketing(TicketDto ticket) {
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		
+		
 
 		int count = ticketService.addTicket(ticket);
 		if (count == 1) {
-			str = "ok";
+			int ticket_num = ticketService.getTicketNum(ticket.getUser_id());
+			rmap.put("status", "ok");
+			rmap.put("ticket_num", ticket_num);
 		} else {
-			str = "no";
+			rmap.put("status","no");
 		}
 
-		return str;
+		return rmap;
 	}
 	
 	@RequestMapping(value = "ticket.do", method = RequestMethod.GET)

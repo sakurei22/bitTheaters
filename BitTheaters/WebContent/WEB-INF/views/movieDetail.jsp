@@ -36,12 +36,22 @@
           <li>장르 : ${selectMovie.movie_genre }</li>
           <li>기본 : ${selectMovie.movie_basic }</li>
         </ul>
-        <button type="button" id ="ticketingBtn" class="btn btn-primary btn-sm" movienum ="${selectMovie.movie_num }">예매하기</button>
+        <button type="button" id ="movieticketingBtn" class="btn btn-primary btn-sm" >예매하기</button>
       </div>
 	
     </div>
     <!-- /.row -->
 	<div style = "margin-bottom : 10px;"></div>
 </div>
+<script type="text/javascript">
+$("#movieticketingBtn").click(function(){
+	if('<%=request.getSession().getAttribute("login")%>' == 'null'){
+		location.href="login.do";
+	} else if('<%=request.getSession().getAttribute("login")%>' != 'null'){
+		location.href="ticket.do";
+	}
+	
+});
+</script>
 
 <%@ include file="./../../include/footer.jsp"%>

@@ -7,4 +7,20 @@
 		INSERT INTO THEATERS_TICKET (TICKET_NUM, TICKET_TITLE, TICKET_DATE, TICKET_TIME, TICKET_PLACE, USER_ID, TICKET_RESERV_DATE, TICKET_AUTH)
 		VALUES(THEATERS_TICKET_SEQ.NEXTVAL, #{ticket_title}, #{ticket_date}, #{ticket_time}, #{ticket_place}, #{user_id}, SYSDATE, 0)
 	</insert>
+	<select id = "getTicketNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT MAX(TICKET_NUM) FROM THEATERS_TICKET
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<select id = "getReservation" parameterType="java.lang.Integer" resultType="bit.com.theaters.model.TicketDto">
+		SELECT TICKET_NUM, TICKET_TITLE, TICKET_DATE, TICKET_TIME, TICKET_PLACE, USER_ID, TICKET_RESERV_DATE, TICKET_AUTH FROM THEATERS_TICKET
+		WHERE TICKET_NUM = #{ticket_number}
+	</select>
+	
+	<select id = "getReservList" parameterType="java.lang.String" resultType="bit.com.theaters.model.TicketDto">
+		SELECT TICKET_NUM, TICKET_TITLE, TICKET_DATE, TICKET_TIME, TICKET_PLACE, USER_ID, TICKET_RESERV_DATE, TICKET_AUTH FROM THEATERS_TICKET
+		WHERE USER_ID = #{user_id}
+		ORDER BY TICKET_DATE desc
+	
+	</select>
 </mapper>
