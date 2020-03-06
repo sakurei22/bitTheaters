@@ -20,7 +20,13 @@
 	<select id = "getReservList" parameterType="java.lang.String" resultType="bit.com.theaters.model.TicketDto">
 		SELECT TICKET_NUM, TICKET_TITLE, TICKET_DATE, TICKET_TIME, TICKET_PLACE, USER_ID, TICKET_RESERV_DATE, TICKET_AUTH FROM THEATERS_TICKET
 		WHERE USER_ID = #{user_id}
-		ORDER BY TICKET_DATE desc
+		ORDER BY TICKET_DATE DESC
 	
 	</select>
+	
+	<update id = "cancleTicket" parameterType="java.lang.Integer">
+		UPDATE THEATERS_TICKET
+		SET TICKET_AUTH = 1
+		WHERE TICKET_NUM = #{ticket_num}
+	</update>
 </mapper>

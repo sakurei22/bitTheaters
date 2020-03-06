@@ -42,7 +42,7 @@ public class TicketDto implements Serializable {
 	private String ticket_place;
 	private String user_id;
 	private String ticket_reserv_date;
-	private String ticket_auth;
+	private int ticket_auth;
 	
 	public TicketDto() {
 	}
@@ -57,7 +57,7 @@ public class TicketDto implements Serializable {
 	}
 
 	public TicketDto(int ticket_num, String ticket_title, String ticket_date, String ticket_time, String ticket_place,
-			String user_id, String ticket_reserv_date, String ticket_auth) {
+			String user_id, String ticket_reserv_date, int ticket_auth) {
 		super();
 		this.ticket_num = ticket_num;
 		this.ticket_title = ticket_title;
@@ -111,10 +111,10 @@ public class TicketDto implements Serializable {
 	public void setTicket_reserv_date(String ticket_reserv_date) {
 		this.ticket_reserv_date = ticket_reserv_date;
 	}
-	public String getTicket_auth() {
+	public int getTicket_auth() {
 		return ticket_auth;
 	}
-	public void setTicket_auth(String ticket_auth) {
+	public void setTicket_auth(int ticket_auth) {
 		this.ticket_auth = ticket_auth;
 	}
 

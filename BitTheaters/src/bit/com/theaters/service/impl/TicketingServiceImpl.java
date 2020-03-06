@@ -35,4 +35,9 @@ public class TicketingServiceImpl implements TicketingService {
 		return ticketDao.getReservList(user_id);
 	}
 
+	@Override
+	public int cancleTicket(int ticket_num) {
+		return ticketDao.cancleTicket(ticket_num);
+	}
+
 }

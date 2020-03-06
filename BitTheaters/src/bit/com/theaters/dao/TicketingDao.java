@@ -10,5 +10,6 @@ public interface TicketingDao {
 	public int getTicketNum(String user_id);
 	public TicketDto getReservation(int ticket_number);
 	public List<TicketDto> getReservList(String user_id);
+	public int cancleTicket(int ticket_num);
 
 }

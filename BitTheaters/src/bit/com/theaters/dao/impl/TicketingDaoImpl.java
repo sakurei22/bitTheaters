@@ -36,5 +36,10 @@ public class TicketingDaoImpl implements TicketingDao {
 		List<TicketDto> list = sqlSession.selectList(namespace+"getReservList", user_id);
 		return list;
 	}
+	@Override
+	public int cancleTicket(int ticket_num) {
+		int status = sqlSession.update(namespace+"cancleTicket", ticket_num);
+		return status;
+	}
 
 }
