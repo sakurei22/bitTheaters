@@ -65,6 +65,21 @@ public class TicketingController {
 	public String ticket() {
 		return "ticket";
 	}
+	@ResponseBody
+	@RequestMapping(value = "cancleTicketAf.do", method = RequestMethod.POST)
+	public String cancleTicketAf(String ticket_number) {
+		String str = "";
+		int ticket_num = Integer.parseInt(ticket_number);
+		int count = ticketService.cancleTicket(ticket_num);
+		if (count == 1) {
+			str = "ok";
+		} else {
+			str = "no";
+		}
+
+		return str;
+	}
+	
 
 	@ResponseBody
 	@RequestMapping(value = "theaterlist.do", method = RequestMethod.POST)

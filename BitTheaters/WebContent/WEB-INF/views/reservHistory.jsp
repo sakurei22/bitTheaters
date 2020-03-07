@@ -78,7 +78,7 @@ $(document).on("click", "#cancleBtn", function(){
 			url : "./cancleTicketAf.do",
 			type : "post",
 			data : {
-				"ticket_number" : "$(this).attr('value')"
+				"ticket_number" : $(this).attr('value')
 			},
 			async : true,
 			success : function(resp) {
@@ -105,7 +105,7 @@ $(document).on("click", "#cancleBtn", function(){
 	} else {
 		return;
 		}
-}
+});
 </script>
 
 <%@ include file="./../../include/footer.jsp"%>
